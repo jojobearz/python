@@ -1,0 +1,33 @@
+# How to connect Python to Sharepoint365 via proxy server
+# Need to set proxy to ClientContext library
+
+from office365.runtime.auth.client_credential import ClientCredential
+from office365.sharepoint.client_context import ClientContext
+from office365.sharepoint.webs.web import Web
+
+def set_proxy(request):
+    proxies = {
+            'https': 'http://{Your proxy username}:{Your proxy password}@{Your proxy ip address or url}',
+            'http': 'http://{Your proxy username}:{Your proxy password}@{Your proxy ip address or url}'
+        }
+    request.proxies = proxies
+
+def disable_ssl(request):
+    request.verify = False  # Disable certification verification
+
+SP_SITE_URL ='https://{Your Tenant ID}.sharepoint.com/Site/{Your site name}'
+SP_DOC_LIBRARY ='{Your SharePoint Folder}'
+USERNAME ='{Your SharePoint username}'
+PASSWORD ='{Your SharePoint Password}'
+
+ctx = ClientContext(SP_SITE_URL).with_user_credentials(USERNAME, PASSWORD)
+
+ctx.pending_request().beforeExecute += set_proxy
+ctx.pending_request().beforeExecute += disable_ssl
+
+sp_folder = ctx.web.lists.get_by_title(SP_DOC_LIBRARY).root_folder
+target_folder = sp_folder.add("{Your new folder name}") # Test add folder to "Target" folder
+
+result = Web.get_context_web_information(ctx).execute_query()
+print(result.value.LibraryVersion)
+
