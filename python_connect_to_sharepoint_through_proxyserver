@@ -22,6 +22,7 @@ PASSWORD ='{Your SharePoint Password}'
 
 ctx = ClientContext(SP_SITE_URL).with_user_credentials(USERNAME, PASSWORD)
 
+# Set proxy information to ClientContext Connection
 ctx.pending_request().beforeExecute += set_proxy
 ctx.pending_request().beforeExecute += disable_ssl
 
