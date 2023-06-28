@@ -2,13 +2,11 @@
 # Need to set proxy to ClientContext library
 
 import os
-import requests
 import warnings
 import contextlib
 import requests
 from urllib3.exceptions import InsecureRequestWarning
 from office365.sharepoint.client_context import ClientContext
-from office365.sharepoint.webs.web import Web
 
 # Set global proxy settings
 proxy = 'http://{your proxy url}:{your proxy port no}'
