@@ -1,0 +1,24 @@
+use_proxies = True
+proxies_url = {'https':Your proxy url:Your proxy port no', 'http':'Your proxy url:Your proxy port no'}
+
+def send_line_message(message, imageFile=None):
+    # Line app
+    url = 'https://notify-api.line.me/api/notify'
+    token = 'Your line token ID'
+    headers = {'content-type':'application/x-www-form-urlencoded','Authorization':'Bearer '+token}
+
+    img = {'imageFile': open(imageFile, 'rb')}
+    data = {'message': message}
+    headers = {'Authorization': 'Bearer ' + token}
+    session = requests.Session()
+
+    if use_proxies:
+        session_post = session.post(url, headers=headers, files=img, data=data, proxies=proxies_url)
+    else:
+        #proxies = ''
+        session_post = session.post(url, headers=headers, files=img, data=data)
+    
+    print(session_post.text)
+
+# Call function
+send_line_message(message='Test message', imageFile='c:\\image.jpg')
