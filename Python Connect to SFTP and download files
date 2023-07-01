@@ -1,0 +1,22 @@
+# pip install pysftp
+
+import pysftp
+
+SFTP_HostName = '{Your host name or IP address'
+SFTP_UserName = '{Your username}'
+SFTP_Password = '{Your password}'
+
+remoteFilePath = '{Your SFTP path}' # example -> /home/test/
+localFilePath = '{Your Local path}
+
+with pysftp.Connection(host=SFTP_HostName, username=SFTP_UserName, password=SFTP_Password) as sftp:
+    sftp.cwd(remoteFilePath)
+    fileList = sftp.listdir()
+    
+    for fileName in fileList:
+        
+        match = re.search('{Your some part of file name}', fileName) # Matching file name you want to download
+        if match:
+            print('Load file from SFTP: ' + fileName)
+            sftp.get(remoteFilePath + fileName, localFilePath + fileName)
+
