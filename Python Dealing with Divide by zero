@@ -1,0 +1,5 @@
+# Deal with divide by zero, set result to zero if divider is zero value
+
+mask = df['DIVIDER'] != 0 
+df['RESULT'] = 0
+df.loc[mask, 'RESULT'] = (df[''] - df['DIVIDEND']) / df['DIVIDER']
