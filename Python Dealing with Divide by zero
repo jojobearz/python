@@ -2,4 +2,4 @@
 
 mask = df['DIVIDER'] != 0 
 df['RESULT'] = 0
-df.loc[mask, 'RESULT'] = (df[''] - df['DIVIDEND']) / df['DIVIDER']
+df.loc[mask, 'RESULT'] = df['DIVIDEND'] / df['DIVIDER']
