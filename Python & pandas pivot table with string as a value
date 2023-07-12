@@ -1,0 +1,20 @@
+import pandas as pd
+
+# initialize list of lists
+data = [['Walter Mitty', 50, 'The Secret Life of Walter Mitty'], ['Nick Fury', 65, 'The Avengers'], ['Clark Kent', 40, 'Superman']]
+
+# Create the pandas DataFrame
+df = pd.DataFrame(data, columns=['Name', 'Age', 'Movie Name'])
+
+df.pivot_tbale(index='Name', columns='Movie Name', values='Age', aggfunc=lambda x: ', '.join(str(v) for v in x)).reset_index()
+
+print(df)
+
+
+# Result
+####################################################################################################################################
+# Movie Name          Name Superman The Avengers The Secret Life of Walter Mitty
+# 0             Clark Kent       40          NaN                             NaN
+# 1              Nick Fury      NaN           65                             NaN
+# 2           Walter Mitty      NaN          NaN                              50
+
