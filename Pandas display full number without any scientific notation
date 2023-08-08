@@ -1,0 +1,17 @@
+# display full numbers without any scientific notation or truncation, use the float_format option to format floating-point numbers 
+# and the display.max_rows and display.max_columns options to ensure that all rows and columns are displayed.
+
+
+import pandas as pd
+
+# Set options to display full numbers and all rows/columns
+pd.set_option('display.float_format', '{:.0f}'.format)
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+
+# Create a DataFrame
+data = {'Number': [1234567890.1234567890, 9876543210.9876543210]}
+df = pd.DataFrame(data)
+
+# Display the DataFrame
+print(df)
