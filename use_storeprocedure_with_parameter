@@ -1,0 +1,39 @@
+import pandas as pd
+
+import pyodbc
+
+def CreateDBConnection():
+    databaseServer = 'ip address'
+    databaseName = 'database name'
+    databaseUID = 'user id'
+    databasePWD = 'password'
+    
+    connection_str = 'DRIVER={SQL Server};Server=' + databaseServer + ';Database=' + databaseName + ';UID=' + databaseUID + ';PWD=' + databasePWD
+    
+    return connection_str
+
+
+
+conn = pyodbc.connect(CreateDBConnection())
+
+# Define the stored procedure and any parameters if required
+stored_procedure = "EXEC XXX.dbo.STORE_NAME @REPORT_DATE = ?"
+params = ('2024-01-01')
+
+
+# Execute the stored procedure
+cursor = conn.cursor()
+cursor.execute(stored_procedure, params)
+
+# Fetch the data into a DataFrame
+columns = [column[0] for column in cursor.description]
+data = cursor.fetchall()
+df = pd.DataFrame.from_records(data, columns=columns)
+
+# Close the cursor and connection
+cursor.close()
+conn.close()
+
+# Display the DataFrame
+print(df)
+
